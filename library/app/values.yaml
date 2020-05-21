@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image: "gcr.io/google_containers/pause-amd64:3.0"
+imagePullPolicy: IfNotPresent
+serviceAccountName: ""
+nameOverride: ""
+fullnameOverride: ""
+volumeMounts: []
+service:
+  type: ClusterIP
+  specs: []
+env: []
+rbac:
+  enabled: false
+autoConfig:
+  enabled: false
+
+annotations: {}
+ingress:
+  enabled: false
+
+resources:
+  limits: {}
+  requests: {}

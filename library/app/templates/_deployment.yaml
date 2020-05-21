@@ -1,0 +1,58 @@
+{{- define "deployment" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app.fullname" . }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "chart.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "chart.labels" . | nindent 8 }}
+      annotations:
+        {{- if .Values.annotations }}
+        {{- toYaml .Values.annotations | nindent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      volumes:
+      {{- if .Values.autoConfig.enabled }}
+      - name: config-volume
+        configMap:
+          name:  {{ .Values.autoConfig.name }}
+      {{- end }}
+{{- if .Values.volumes }}
+{{ toYaml .Values.volumes | indent 6 }}
+{{- end }}
+      containers:
+      - name: app
+        image: "{{ .Values.image }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        volumeMounts:
+        {{- if .Values.autoConfig.enabled }}
+        - name: config-volume
+          mountPath: {{ .Values.autoConfig.path }}
+        {{- end }}
+{{- if .Values.volumeMounts }}
+{{ toYaml .Values.volumeMounts | indent 8 }}
+{{- end }}
+        ports:
+        {{- range .Values.services -}}
+        {{- range $port := .specs}}
+        - name: {{ .name }}
+          containerPort: {{ .targetPort | default .port}}
+          protocol: {{ .protocol | default "TCP" }}
+        {{- end }}
+        {{- end }}
+        env:
+{{- if .Values.env }}
+{{ toYaml .Values.env | indent 8 }}
+{{- end }}
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+{{- end -}}
