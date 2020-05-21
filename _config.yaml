@@ -1,0 +1,11 @@
+# _config.yaml
+title: DStream Helm Charts
+description: A chart repo for storing charts.
+theme: minima
+url: "https://charts.dstream.cloud/"
+repo_name: dstream 
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - .gitignore
