@@ -1,0 +1,6 @@
+# chartpress.yaml
+charts:
+  - name: library/app 
+    repo: 
+      git: dstreamcloud/charts
+      published: https://charts.dstream.cloud
