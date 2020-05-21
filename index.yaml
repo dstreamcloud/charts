@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  app:
+  - apiVersion: v1
+    appVersion: 1.0.0
+    created: 2020-05-21T11:01:25.680679824+08:00
+    description: A Application Helm chart
+    digest: ecbc0c29991b91423b02e3e01d999ee4bc9c4fe7fdb454da8784b2a36e9ac065
+    name: app
+    urls:
+    - https://charts.dstream.cloud/app-0.1.0.tgz
+    version: 0.1.0
+generated: 2020-05-21T11:01:25.680154243+08:00
